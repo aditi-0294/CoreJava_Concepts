@@ -9,15 +9,15 @@ public class FileCompareLogic {
 		
 		FileCompare fc = new FileCompare();
 		
-		// set respective file path
+		// set file path
 		fc.setOriginalFile(originalPath);
 		fc.setComparingFile(newPath);
 		
-		// retrieve and display respective file path
+		// retrieve and display file path
 		System.out.println("Original File path = " + fc.getOriginalFile());
 		System.out.println("Test File path = " + fc.getComparingFile());
 		
-		BufferedReader br_original = null; 
+		BufferedReader br_original = null;
 		BufferedReader br_comparing = null;
 		
 		try {
@@ -27,8 +27,8 @@ public class FileCompareLogic {
 			
 			String line; // read file line-by-line
 			
-			List<String> originalList = new ArrayList<>(); // list containing all data
-			List<String> missingList = new ArrayList(); // list containing missing data
+			List<String> originalList = new ArrayList<>(); // contains all required data
+			List<String> missingList = new ArrayList(); // contains missing data
 			
 			// read line and add to list
 			while((line = br_original.readLine()) != null) {
@@ -42,7 +42,7 @@ public class FileCompareLogic {
 			List<String> tempList = new ArrayList<>(originalList); // creating a temporary list
 			tempList.removeAll(missingList);
 			
-			System.out.println("Content from original file not present in comparing file : ");
+			System.out.println("Content from originalList file not present in missingList , i.e. , comparing file : ");
 			
 			for(int i = 0; i < tempList.size(); i++) {
 				System.out.println(tempList.get(i));

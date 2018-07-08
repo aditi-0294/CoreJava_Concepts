@@ -1,10 +1,10 @@
 
 public class FileCompare {
 
-	private String originalFile; // file containing all data
-	private String comparingFile; // file containing missing data
+	private String originalFile; // contains all required data
+	private String comparingFile; // contains missing data
 	
-	// generating constructor using respective field
+	// generate constructor using respective fields
 	public FileCompare() {
 		
 	}
@@ -15,7 +15,7 @@ public class FileCompare {
 		this.comparingFile = comparingFile;
 	}
 
-	// generating getter-setter fields
+	// generate getter-setter for respective fields
 	public String getOriginalFile() {
 		return originalFile;
 	}
