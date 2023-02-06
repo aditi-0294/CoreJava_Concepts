@@ -1,0 +1,122 @@
+SwaggerConfig.java --->>> new class
+
+package com.morrisons.wholesale.config;
+
+import static springfox.documentation.builders.PathSelectors.regex;
+
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+
+import springfox.documentation.builders.RequestHandlerSelectors;
+import springfox.documentation.spi.DocumentationType;
+import springfox.documentation.spring.web.plugins.Docket;
+import springfox.documentation.swagger2.annotations.EnableSwagger2;
+
+@Configuration
+@EnableSwagger2
+public class SwaggerConfig {
+
+	@Bean
+	public Docket api() {
+		return new Docket(DocumentationType.SWAGGER_2).select()
+				.apis(RequestHandlerSelectors.basePackage("com.morrisons.wholesale"))
+				.paths(regex("/wholesale.*"))
+				.build();
+
+	}
+}
+
+
+
+--------------
+
+applicaion.yml ::
+
+server:
+  servlet:
+    contextPath: /wholesale-price-service
+
+spring:
+  profiles: local
+  main:
+    banner-mode: "off"
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5432/postgres
+    username: postgres
+    password: root
+    platform: postgres
+    hikari:
+      maximumPoolSize : 200
+      minimumIdle: 10
+      maxLifetime: 2000000
+      connectionInitSql: SELECT 1
+  flyway:
+    enabled: true
+    locations: classpath:/db/corrected_local
+    baseline-version: 0
+    baselineOnMigrate: true
+    ignore-missing-migrations: false 
+    table: wholesale_price_service_flyway_history
+  jpa:
+    database: POSTGRESQL
+    database-platform : org.hibernate.dialect.PostgreSQL94Dialect
+    hibernate:
+      ddl-auto: none
+      id:
+        new_generator_mappings: true
+    properties:
+      hibernate:
+        temp.use_jdbc_metadata_defaults: false
+    show-sql: true
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
+
+logging:
+  level:
+    org.springframework.web: ERROR
+    com.morrisons.wholesale: DEBUG
+    org:
+      hibernate:
+        SQL= debug:
+        type:
+          descriptor:
+            sql=trace:
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n-%X{mdcData}%5p"
+    
+paginationLimit: 2
+paginationStart: 0
+
+pushModel: '{"rontec":"true","rontec-b":"true","sandpiper":"false","mccolls":"false","amazon":"false"}'
+confirmation:
+   requestParamterMap:
+            status: "status"
+            effectiveDate: "effective_date"
+            eventId: "event_id"
+            tradingName: "trading_hierarchy_value"
+            offset : "offset"
+            limit: "limit"
+   schedulefixRate: 60
+   
+sqlQuery:
+    limit : 100
+    offset : 0
+	
+--------------------------------
+
+pom.xml
+
+<dependency>
+			<groupId>io.springfox</groupId>
+			<artifactId>springfox-boot-starter</artifactId>
+			<version>${springfox-swagger-version}</version> ----->>>>>>>>   <springfox-swagger-version>3.0.0</springfox-swagger-version>
+		</dependency>
+		
+		
+		
+---------------------------------------
+
+http://localhost:8080/wholesale-customer-group-service/v2/api-docs
+http://localhost:8080/wholesale-customer-group-service/swagger-ui.html#/
